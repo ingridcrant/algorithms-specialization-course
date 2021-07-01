@@ -1,7 +1,7 @@
 from math import log10
 
 # karatsuba multiplication
-# implemented from Tim Roughgarden's Algorithms course
+# python implementation from Tim Roughgarden's Algorithms course
 def karatsuba(x, y):
     if x < 10 or y < 10:
         return x * y
