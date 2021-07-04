@@ -36,8 +36,15 @@ def pick_median(arr, l, r):
     
     return [arr[l], arr]
 
+# picks a random pivot
+def pick_random(arr, l, r):
+    rand_pos = randint(l,r)
+    swap(arr, l, rand_pos)
+
+    return [arr[l], arr]
+
 def partition(arr, l, r):
-    [p, arr] = pick_median(arr, l, r)
+    [p, arr] = pick_random(arr, l, r)
 
     i = l + 1
 
