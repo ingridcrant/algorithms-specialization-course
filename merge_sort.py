@@ -24,6 +24,7 @@ def merge_sort(nums):
                 else:
                     nums = nums[:k] + a[i:]
                 break
+        print(nums)
     
     # base case: size of nums is 1
     return nums
