@@ -1,33 +1,31 @@
 from math import inf
-
-x = set()
-shortest_distances = [0] + [inf]*199
+import heapq
 
 def MainLoop(graph):
-    global x, shortest_distances
-    x.add(1)
     n = len(graph)
+    visited = set()
+    shortest_distances = [0]+[inf]*(n-1)
+    min_dist = [(0,1)]      # [(dist, node)]
 
-    while len(x) < n:
-        shortest_distance_so_far = inf
-        new_node = None
+    while len(visited) < n:
+        current_dist, current_node = heapq.heappop(min_dist)
 
-        for tail in x:
-            for pair in graph[tail]:
-                v2 = pair[0]
-                length = shortest_distances[tail-1] + pair[1]
+        if current_node not in visited:
+            visited.add(current_node)
 
-                if v2 not in x:
-                    if length < shortest_distance_so_far:
-                        shortest_distance_so_far = length
-                        new_node = v2
-        
-        x.add(new_node)     
-        shortest_distances[new_node-1] = shortest_distance_so_far
+            for pair in graph[current_node]:
+                connection = pair[0]
+                if connection not in visited:
+                    dist = current_dist + pair[1]
+                    if dist < shortest_distances[connection-1]:
+                        shortest_distances[connection-1] = dist
+                        heapq.heappush(min_dist, (dist, connection))
+    
+    return shortest_distances
 
 graph = {}
 
-# graph in the form {t1, [[h1, l1], [h2, l2]], t2, [[h1, l1], [h2, l2]]}
+# graph in the form {t1: [[h1, l1], [h2, l2]], t2: [[h1, l1], [h2, l2]]}
 with open("DK.txt") as a_file:
     for line in a_file:
         lis = line.strip().split('\t')
@@ -41,4 +39,9 @@ with open("DK.txt") as a_file:
         
         graph[v1] = v2s
 
-MainLoop(graph)
+shortest_distances = MainLoop(graph)
+
+vertices = [7,37,59,82,99,115,133,165,188,197]
+
+for vertex in vertices:
+    print(shortest_distances[vertex-1], end=",")
