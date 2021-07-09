@@ -23,7 +23,7 @@ def MainLoop(graph):
     
     return shortest_distances
 
-graph = {}
+graph = {1: [[2, 1], [3,4]], 2: [[3, 2], [4, 6]], 3: [[4, 3]]}
 
 # graph in the form {t1: [[h1, l1], [h2, l2]], t2: [[h1, l1], [h2, l2]]}
 with open("DK.txt") as a_file:
